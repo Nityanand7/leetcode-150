@@ -25,3 +25,19 @@ class Solution:
             return False
 
         return can(0)
+    
+# dynamic programming solution - bottom up approach
+
+class Solution:
+    def canJump(self, nums: List[int]) -> bool:
+        n = len(nums)
+        dp = [False] * n
+        dp[-1] = True                       # last index can reach itself
+
+        for i in range(n - 2, -1, -1):      # fill from right to left
+            furthest = min(n - 1, i + nums[i])
+            for j in range(i + 1, furthest + 1):
+                if dp[j]:
+                    dp[i] = True            # i is good if any reachable j is good
+                    break
+        return dp[0]
