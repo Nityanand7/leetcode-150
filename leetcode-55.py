@@ -8,3 +8,20 @@ class Solution:
         
         return goal == 0
     
+# dynamic programming solution - top down approach
+
+class Solution:
+    def canJump(self, nums: List[int]) -> bool:
+        n = len(nums)
+
+        @lru_cache(None)              
+        def can(i: int) -> bool:
+            if i >= n - 1:            # at or beyond last stone
+                return True
+            far = min(n - 1, i + nums[i])
+            for j in range(i + 1, far + 1):
+                if can(j):
+                    return True
+            return False
+
+        return can(0)
