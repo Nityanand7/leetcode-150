@@ -28,3 +28,21 @@ class Solution:
             return 1 + best               # take one jump to that best j
 
         return dp(0)
+    
+# dynamic programming solution - bottom up approach
+
+class Solution:
+    def jump(self, nums: List[int]) -> int:
+        n = len(nums)
+        dp = [float('inf')] * n
+        dp[-1] = 0                       # 0 jumps needed from last index
+
+        for i in range(n - 2, -1, -1):
+            far = min(n - 1, i + nums[i])
+            best = float('inf')
+            for j in range(i + 1, far + 1):
+                if dp[j] < best:
+                    best = dp[j]
+            if best < float('inf'):
+                dp[i] = 1 + best
+        return dp[0]
