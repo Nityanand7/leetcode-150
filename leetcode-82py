@@ -1,0 +1,43 @@
+# using a 2 pointer approach
+class Solution:
+    def deleteDuplicates(self, head: Optional[ListNode]) -> Optional[ListNode]:
+        dummy = ListNode(0, head)
+        prev = dummy
+        cur = head
+
+        while cur:
+            
+            if cur.next and cur.val == cur.next.val:
+                dup = cur.val
+                while cur and cur.val == dup:
+                    cur = cur.next
+                prev.next = cur
+
+            else:
+                prev = cur
+                cur = cur.next
+
+        return dummy.next
+
+
+# Using a hashmap - not optimal as it uses O(n) space
+class Solution:
+    def deleteDuplicates(self, head: Optional[ListNode]) -> Optional[ListNode]:
+
+        freq = Counter()
+        cur = head
+        while cur:
+            freq[cur.val] += 1
+            cur = cur.next
+
+        dummy = ListNode(0)
+        cur = head
+        tail = dummy
+
+        while cur:
+            if freq[cur.val] == 1:
+                tail.next = ListNode(cur.val)
+                tail = tail.next
+            cur = cur.next
+
+        return dummy.next
